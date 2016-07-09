@@ -1,26 +1,25 @@
-express = require('express');
-server = express();
+var express = require('express');
+var app = express();
 
-server.get('/', function (req, res) {
-res.sendfile('public/index.html');
+var bodyParser = require('body-parser');
+
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+app.use(bodyParser());
+
+app.get('/', function (req, res) {
+  res.sendfile('public/index.html');
 });
 
-server.get('/new', function (req, res) {
-  res.json(
-    {
-       tournemant: 20,
-       uuid: '1232kjn3k4n343kj11234556'
-    }
-  );
+app.get('/new', function (req, res) {
+  res.sendfile('public/new.html');
 });
 
-server.post('/tournemant/:id/add_player', function(req, res) {
-  // TODO get name from player
-  // tournemant ID from routes
-  // response with success
+app.post('/tournament/:id/add_players', function(req, res) {
+  var post_data = req.body;
+  res.json(req.body);
 });
 
-
-server.listen(3000, function () {
+app.listen(3000, function () {
   console.log('Example app listening on port 3000!');
 });
